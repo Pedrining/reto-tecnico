@@ -1,0 +1,21 @@
+{
+  "name": "aws-lambda-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "invoke": "sls invoke local -f obtenerEmpleados",
+    "deploy": "sls deploy --stage dev --verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless-aws-documentation": "^1.1.0",
+    "serverless-openapi-documentation": "^0.4.0"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "serverless-mysql": "^1.5.4"
+  }
+}

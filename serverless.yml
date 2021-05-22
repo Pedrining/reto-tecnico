@@ -1,0 +1,185 @@
+service: demo-service
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  stage: dev
+  profile: deploy-aws
+  region: us-west-2
+  environment: 
+    NODE_ENV: dev
+    DB_NAME: empresa
+    DB_USER: admin
+    DB_PASSWORD: adminadmin
+    DB_HOST: empresa.ctbddntnty8v.us-west-2.rds.amazonaws.com
+    DB_PORT: 3306
+
+plugins:
+  - serverless-aws-documentation
+  
+custom:
+  documentation:
+    api:
+      info:
+        version: '2'
+        title: DEMO API
+        description: API CON 3 SERVICIOS(GET EMPLEADO, POST EMPLEADO Y GET StarWars API)
+        contact:
+          name: Pedro Infante Garcia
+          email: infantegarciap@gmail.com
+        license:
+          name: The license
+          url: https://www.github.com
+    models:
+      -
+        name: OK
+        contentType: "application/json"
+        schema:
+          type: object
+          properties:
+            mensaje:
+              type: string
+      -
+        name: Persona
+        contentType: "application/json"
+        schema:
+          type: object
+          properties:
+            nombre:
+              type: string
+            altura:
+              type: string
+            masa:
+              type: string
+            colorDePelo:
+              type: string
+            colorDePiel:
+              type: string
+            colorDeOjo:
+              type: string
+            anioDeNacimiento:
+              type: string
+            genero:
+              type: string 
+            lugarDeOrigen:
+              type: string
+            peliculas:
+              type: string
+            especies:
+              type: string
+            vehiculos:
+              type: string
+            navesEstelares:
+              type: string
+            fechaDeCreacion:
+              type: string
+            fechaDeActualizacion:
+              type: string
+            url:
+              type: string
+
+      -
+        name: Empleado
+        contentType: "application/json"
+        schema:
+          type: object
+          properties:
+            nombre:
+              type: string
+            correo:
+              type: string
+      -
+        name: EmpleadoResponse
+        contentType: "application/json"
+        schema:
+          type: object
+          properties:
+            id:
+              type: number
+            nombre:
+              type: string
+            correo:
+              type: string
+      -
+        name: ErrorResponse
+        contentType: "application/json"
+        schema:
+          type: object
+          properties:
+            mensaje:
+              type: string
+            statusCode:
+              type: number
+  commonModelSchemaFragments:
+    MethodResponse400Json:
+      statusCode: '400'
+      responseModels:
+        "application/json": ErrorResponse
+
+functions:
+  obtenerPersona:
+    handler: handler.obtenerPersona
+    events:
+      - http:
+          method: get
+          path: /obtenerPersona/{id}
+          documentation: 
+              summary: Obtiene una persona según el identificador en el api Star Wars
+              pathParams:
+              - 
+                name: "id"
+                description: "ID de la persona de Star Wars API"
+              methodResponses:
+              -
+                statusCode: '200'
+                responseModels:
+                  "application/json": Persona
+              -
+                statusCode: '400'
+                responseModels:
+                  "application/json": ErrorResponse
+
+  crearEmpleado:
+    handler: handler.crearEmpleado
+    timeout: 300
+    events:
+      - http:
+          method: post
+          path: /empleado
+          cors: true
+          documentation: 
+              summary: Crear un empleado en mysql
+              description: Crea empleado
+              requestModels:
+               "application/json": Empleado
+              methodResponses:
+              -
+                statusCode: '200'
+                responseModels:
+                  "application/json": OK
+              -
+                statusCode: '400'
+                responseModels:
+                  "application/json": ErrorResponse
+  obtenerEmpleados:
+    handler: handler.obtenerEmpleados
+    timeout: 300
+    events:
+      - http:
+          method: get
+          path: /empleado
+          cors: true
+          documentation: 
+              summary: Obtiene la lista de empleados de la empresa
+              description: Obtiene empleados
+              methodResponses:
+              -
+                statusCode: '200'
+                responseModels:
+                  "application/json": EmpleadoResponse
+              -
+                statusCode: '400'
+                responseModels:
+                  "application/json": ErrorResponse

@@ -1,0 +1,234 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "API CON 3 SERVICIOS(GET EMPLEADO, POST EMPLEADO Y GET StarWars API)",
+    "version" : "2021-05-22T02:19:56Z",
+    "title" : "dev-demo-service",
+    "contact" : {
+      "name" : "Pedro Infante Garcia",
+      "email" : "infantegarciap@gmail.com"
+    },
+    "license" : {
+      "name" : "The license",
+      "url" : "https://www.github.com"
+    }
+  },
+  "host" : "3l87ozr7ca.execute-api.us-west-2.amazonaws.com",
+  "basePath" : "/dev",
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/" : {
+      "get" : {
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "schema" : {
+              "$ref" : "#/definitions/Empty"
+            }
+          }
+        }
+      }
+    },
+    "/empleado" : {
+      "get" : {
+        "summary" : "Obtiene la lista de empleados de la empresa",
+        "description" : "Obtiene empleados",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "schema" : {
+              "$ref" : "#/definitions/EmpleadoResponse"
+            }
+          },
+          "400" : {
+            "description" : "400 response",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Crear un empleado en mysql",
+        "description" : "Crea empleado",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "Empleado",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Empleado"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "schema" : {
+              "$ref" : "#/definitions/OK"
+            }
+          },
+          "400" : {
+            "description" : "400 response",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "options" : {
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Methods" : {
+                "type" : "string"
+              },
+              "Access-Control-Allow-Headers" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/obtenerPersona/{id}" : {
+      "get" : {
+        "summary" : "Obtiene una persona según el identificador en el api Star Wars",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID de la persona de Star Wars API",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200 response",
+            "schema" : {
+              "$ref" : "#/definitions/Persona"
+            }
+          },
+          "400" : {
+            "description" : "400 response",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Empty" : {
+      "type" : "object",
+      "title" : "Empty Schema"
+    },
+    "Empleado" : {
+      "type" : "object",
+      "properties" : {
+        "correo" : {
+          "type" : "string"
+        },
+        "nombre" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Persona" : {
+      "type" : "object",
+      "properties" : {
+        "peliculas" : {
+          "type" : "string"
+        },
+        "especies" : {
+          "type" : "string"
+        },
+        "anioDeNacimiento" : {
+          "type" : "string"
+        },
+        "navesEstelares" : {
+          "type" : "string"
+        },
+        "colorDePiel" : {
+          "type" : "string"
+        },
+        "colorDeOjo" : {
+          "type" : "string"
+        },
+        "nombre" : {
+          "type" : "string"
+        },
+        "lugarDeOrigen" : {
+          "type" : "string"
+        },
+        "vehiculos" : {
+          "type" : "string"
+        },
+        "fechaDeActualizacion" : {
+          "type" : "string"
+        },
+        "url" : {
+          "type" : "string"
+        },
+        "fechaDeCreacion" : {
+          "type" : "string"
+        },
+        "masa" : {
+          "type" : "string"
+        },
+        "colorDePelo" : {
+          "type" : "string"
+        },
+        "altura" : {
+          "type" : "string"
+        },
+        "genero" : {
+          "type" : "string"
+        }
+      }
+    },
+    "EmpleadoResponse" : {
+      "type" : "object",
+      "properties" : {
+        "correo" : {
+          "type" : "string"
+        },
+        "id" : {
+          "type" : "number"
+        },
+        "nombre" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OK" : {
+      "type" : "object",
+      "properties" : {
+        "mensaje" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ErrorResponse" : {
+      "type" : "object",
+      "properties" : {
+        "mensaje" : {
+          "type" : "string"
+        },
+        "statusCode" : {
+          "type" : "number"
+        }
+      }
+    }
+  }
+}
